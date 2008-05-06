@@ -69,7 +69,13 @@ module ActionView
           def toggle(*ids)
             call "$(\"##{ids.join(',#')}\").toggle"
           end
-          
+
+          def to_s_with_jquery(noconflict = true)
+            javascript = to_s_without_jquery
+            javascript = "jQuery(function($) {#{javascript}})" if noconflict
+            javascript
+          end
+          alias_method_chain :to_s, :jquery
         end
       end
       
